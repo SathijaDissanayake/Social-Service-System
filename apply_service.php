@@ -28,14 +28,14 @@ $services = $conn->query("SELECT * FROM services");
     <select name="service_id">
         <?php while ($s = $services->fetch_assoc()) { ?>
             <option value="<?php echo $s['id']; ?>">
-                <?php echo $s['name']; ?>
+                <?php echo htmlspecialchars($s['service_name']); ?>
             </option>
         <?php } ?>
     </select>
 
     <br><br>
 
-    <input type="text" name="message" placeholder="Your Message" required>
+    <input type="text" name="reason" placeholder="Reason for application" required>
 
     <br><br>
 

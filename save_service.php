@@ -10,7 +10,7 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
 $name = $_POST['name'];
 $description = $_POST['description'];
 
-$sql = "INSERT INTO services (name, description) VALUES ('$name', '$description')";
+$sql = "INSERT INTO services (service_name, description) VALUES ('$name', '$description')";
 
 $conn->query($sql);
 

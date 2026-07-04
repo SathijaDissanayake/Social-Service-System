@@ -7,12 +7,12 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$user = $_SESSION['user'];
+$user_id = $_SESSION['id'];
 $service_id = $_POST['service_id'];
-$message = $_POST['message'];
+$reason = $_POST['reason'];
 
-$sql = "INSERT INTO applications (user, service_id, message, status)
-        VALUES ('$user', '$service_id', '$message', 'Pending')";
+$sql = "INSERT INTO applications (user_id, service_id, reason, status)
+        VALUES ('$user_id', '$service_id', '$reason', 'Pending')";
 
 $conn->query($sql);
 

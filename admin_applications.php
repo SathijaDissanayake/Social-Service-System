@@ -7,7 +7,7 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-$result = $conn->query("SELECT * FROM applications");
+$result = $conn->query("SELECT a.*, u.username, s.service_name FROM applications a JOIN users u ON a.user_id = u.id JOIN services s ON a.service_id = s.id");
 ?>
 
 <!DOCTYPE html>
@@ -28,8 +28,8 @@ $result = $conn->query("SELECT * FROM applications");
     <tr>
         <th>ID</th>
         <th>User</th>
-        <th>Service ID</th>
-        <th>Message</th>
+        <th>Service</th>
+        <th>Reason</th>
         <th>Status</th>
         <th>Action</th>
     </tr>
@@ -37,9 +37,9 @@ $result = $conn->query("SELECT * FROM applications");
 <?php while ($row = $result->fetch_assoc()) { ?>
     <tr>
         <td><?php echo $row['id']; ?></td>
-        <td><?php echo $row['user']; ?></td>
-        <td><?php echo $row['service_id']; ?></td>
-        <td><?php echo $row['message']; ?></td>
+        <td><?php echo htmlspecialchars($row['username']); ?></td>
+        <td><?php echo htmlspecialchars($row['service_name']); ?></td>
+        <td><?php echo htmlspecialchars($row['reason']); ?></td>
         <td><?php echo $row['status']; ?></td>
         <td>
             <a href="update_status.php?id=<?php echo $row['id']; ?>&status=Approved">Approve</a> |
