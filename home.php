@@ -1,15 +1,31 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Social Service System</title>
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Welcome to Social Service System</h2>
+<div class="container">
+    <h2>Welcome, <?php echo htmlspecialchars($_SESSION['fullname'] ?? $_SESSION['user']); ?> 👋</h2>
 
-<a href="add_service.php">Add Service</a> |
-<a href="view_services.php">View Services</a> |
-<a href="admin_dashboard.php">Admin Dashboard</a>
+    <a href="apply_service.php">Apply for Service</a> |
+    <a href="my_applications.php">My Applications</a> |
+    <a href="help.php">Help</a>
+    <?php if (($_SESSION['role'] ?? '') === 'admin') { ?> |
+    <a href="admin_dashboard.php">Admin Dashboard</a>
+    <?php } ?> |
+    <a href="logout.php">Logout</a>
+</div>
 
 </body>
 </html>
