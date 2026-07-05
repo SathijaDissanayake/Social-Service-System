@@ -1,59 +1,90 @@
 <?php
 if (!isset($pageTitle)) {
-    $pageTitle = 'Social Service System';
+    $pageTitle = 'Social Service Hub';
 }
-if (!isset($bodyClass)) {
-    $bodyClass = '';
+if (!isset($activePage)) {
+    $activePage = '';
 }
+$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+$portalLabel = $isAdmin ? 'Admin Portal' : 'Citizen Portal';
+$userInitial = strtoupper(substr($_SESSION['fullname'] ?? $_SESSION['user'] ?? 'U', 0, 1));
+$userName = $_SESSION['fullname'] ?? $_SESSION['user'] ?? 'User';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($pageTitle); ?> | OSSMS</title>
+    <title><?php echo htmlspecialchars($pageTitle); ?> | Social Service Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="app.css">
 </head>
-<body class="<?php echo htmlspecialchars($bodyClass); ?>">
+<body class="app-page">
 
-<div class="bg-shapes" aria-hidden="true">
-    <span class="shape shape-1"></span>
-    <span class="shape shape-2"></span>
-    <span class="shape shape-3"></span>
-</div>
-
-<header class="site-header">
-    <div class="header-inner">
-        <a href="<?php echo isset($_SESSION['user']) ? (($_SESSION['role'] ?? '') === 'admin' ? 'admin_dashboard.php' : 'home.php') : 'index.php'; ?>" class="logo">
-            <span class="logo-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+<header class="landing-header app-header">
+    <div class="landing-header-inner app-header-inner">
+        <a href="<?php echo $isAdmin ? 'admin_dashboard.php' : 'home.php'; ?>" class="landing-logo">
+            <span class="landing-logo-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </span>
-            <span class="logo-text">Social Service<span class="logo-accent">Hub</span></span>
+            <span class="landing-logo-text">
+                <strong>Social Service Hub</strong>
+                <small><?php echo $portalLabel; ?></small>
+            </span>
         </a>
 
-        <?php if (isset($_SESSION['user'])) { ?>
-        <nav class="main-nav">
-            <?php if (($_SESSION['role'] ?? '') === 'admin') { ?>
-                <a href="admin_dashboard.php">Dashboard</a>
-                <a href="admin_services.php">Services</a>
-                <a href="admin_applications.php">Applications</a>
+        <nav class="app-nav">
+            <?php if ($isAdmin) { ?>
+                <a href="admin_dashboard.php" class="app-nav-link <?php echo $activePage === 'dashboard' ? 'active' : ''; ?>">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Dashboard
+                </a>
+                <a href="admin_services.php" class="app-nav-link <?php echo $activePage === 'services' ? 'active' : ''; ?>">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    Services
+                </a>
+                <a href="admin_applications.php" class="app-nav-link <?php echo $activePage === 'applications' ? 'active' : ''; ?>">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Applications
+                </a>
+                <a href="home.php" class="app-nav-link <?php echo $activePage === 'home' ? 'active' : ''; ?>">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    Citizen View
+                </a>
             <?php } else { ?>
-                <a href="home.php">Home</a>
-                <a href="apply_service.php">Apply</a>
-                <a href="my_applications.php">My Applications</a>
-                <a href="help.php">Help</a>
+                <a href="home.php" class="app-nav-link <?php echo $activePage === 'home' ? 'active' : ''; ?>">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    Home
+                </a>
+                <a href="apply_service.php" class="app-nav-link <?php echo $activePage === 'apply' ? 'active' : ''; ?>">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                    Apply
+                </a>
+                <a href="my_applications.php" class="app-nav-link <?php echo $activePage === 'applications' ? 'active' : ''; ?>">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    My Applications
+                </a>
+                <a href="help.php" class="app-nav-link <?php echo $activePage === 'help' ? 'active' : ''; ?>">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Help
+                </a>
             <?php } ?>
-            <span class="nav-user">
-                <span class="nav-avatar"><?php echo strtoupper(substr($_SESSION['fullname'] ?? $_SESSION['user'], 0, 1)); ?></span>
-                <?php echo htmlspecialchars($_SESSION['fullname'] ?? $_SESSION['user']); ?>
-            </span>
-            <a href="logout.php" class="nav-logout">Logout</a>
         </nav>
-        <?php } ?>
+
+        <div class="app-user-area">
+            <div class="app-user">
+                <span class="app-user-avatar"><?php echo $userInitial; ?></span>
+                <span class="app-user-name"><?php echo htmlspecialchars($userName); ?></span>
+            </div>
+            <a href="logout.php" class="app-logout">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Logout
+            </a>
+        </div>
     </div>
 </header>
 
-<main class="page-content">
+<main class="app-main">

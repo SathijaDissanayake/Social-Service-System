@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "database.php";
+include "includes/helpers.php";
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
@@ -11,36 +12,29 @@ $user_id = $_SESSION['id'];
 $result = $conn->query("SELECT a.*, s.service_name FROM applications a JOIN services s ON a.service_id = s.id WHERE a.user_id = $user_id ORDER BY a.id DESC");
 
 $pageTitle = 'My Applications';
+$activePage = 'applications';
 include 'includes/header.php';
-
-function statusBadge($status) {
-    $class = 'badge-pending';
-    if ($status === 'Approved') $class = 'badge-approved';
-    if ($status === 'Rejected') $class = 'badge-rejected';
-    return '<span class="badge ' . $class . '">' . htmlspecialchars($status) . '</span>';
-}
 ?>
 
-<a href="home.php" class="back-link">← Back to Home</a>
+<a href="home.php" class="app-back">← Back to Home</a>
 
-<div class="page-banner">
-    <span class="banner-badge">Your Requests</span>
+<div class="app-page-head">
+    <span class="app-label">Your Requests</span>
     <h1>My Applications</h1>
     <p>Track the status of all your submitted service applications.</p>
 </div>
 
-<div class="toolbar">
-    <div></div>
-    <a href="apply_service.php" class="btn btn-primary">+ New Application</a>
+<div class="app-toolbar">
+    <a href="apply_service.php" class="app-btn">+ New Application</a>
 </div>
 
 <?php if ($result->num_rows === 0) { ?>
-<div class="card card-glow empty-state">
+<div class="app-empty">
     <p>📭 You haven't submitted any applications yet.</p>
-    <a href="apply_service.php" class="btn btn-primary">Apply for a Service</a>
+    <a href="apply_service.php" class="app-btn">Apply for a Service</a>
 </div>
 <?php } else { ?>
-<div class="table-wrap">
+<div class="app-table-wrap">
     <table>
         <thead>
             <tr>

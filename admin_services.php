@@ -10,27 +10,29 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
 $result = $conn->query("SELECT * FROM services");
 
 $pageTitle = 'Manage Services';
+$activePage = 'services';
 include 'includes/header.php';
 ?>
 
-<div class="page-banner">
-    <span class="banner-badge">Admin</span>
+<a href="admin_dashboard.php" class="app-back">← Back to Dashboard</a>
+
+<div class="app-page-head">
+    <span class="app-label">Admin</span>
     <h1>Manage Services</h1>
     <p>Add, view, or remove social services available to citizens.</p>
 </div>
 
-<div class="toolbar">
-    <div></div>
-    <a href="add_service.php" class="btn btn-primary">+ Add New Service</a>
+<div class="app-toolbar">
+    <a href="add_service.php" class="app-btn app-btn-green">+ Add New Service</a>
 </div>
 
 <?php if ($result->num_rows === 0) { ?>
-<div class="card card-glow empty-state">
+<div class="app-empty">
     <p>No services found. Add your first service to get started.</p>
-    <a href="add_service.php" class="btn btn-primary">Add Service</a>
+    <a href="add_service.php" class="app-btn">Add Service</a>
 </div>
 <?php } else { ?>
-<div class="table-wrap">
+<div class="app-table-wrap">
     <table>
         <thead>
             <tr>
@@ -47,7 +49,7 @@ include 'includes/header.php';
                 <td><strong><?php echo htmlspecialchars($row['service_name']); ?></strong></td>
                 <td><?php echo htmlspecialchars($row['description']); ?></td>
                 <td>
-                    <a href="delete_service.php?id=<?php echo $row['id']; ?>" class="link-delete" onclick="return confirm('Delete this service?');">Delete</a>
+                    <a href="delete_service.php?id=<?php echo $row['id']; ?>" class="app-action-delete" onclick="return confirm('Delete this service?');">Delete</a>
                 </td>
             </tr>
         <?php } ?>

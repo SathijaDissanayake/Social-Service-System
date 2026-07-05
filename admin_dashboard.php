@@ -8,36 +8,52 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
 }
 
 $pageTitle = 'Admin Dashboard';
+$activePage = 'dashboard';
 include 'includes/header.php';
 ?>
 
-<div class="page-banner">
-    <span class="banner-badge">Admin Panel</span>
+<div class="app-page-head">
+    <span class="app-label">Admin Panel</span>
     <h1>Admin Dashboard</h1>
     <p>Manage social services, review citizen applications, and keep the platform running smoothly.</p>
 </div>
 
-<div class="action-grid">
-    <a href="admin_services.php" class="action-card teal">
-        <div class="action-card-icon teal">🏥</div>
+<div class="dash-cards">
+    <div class="dash-card blue">
+        <div class="dash-card-icon">🏥</div>
         <h3>Manage Services</h3>
         <p>Add, view, or remove available social services offered to citizens.</p>
-        <span class="card-arrow">Manage →</span>
-    </a>
+        <ul class="dash-card-list">
+            <li>Create new service offerings</li>
+            <li>Update service descriptions</li>
+            <li>Remove outdated services</li>
+        </ul>
+        <a href="admin_services.php" class="dash-card-btn">Manage Services →</a>
+    </div>
 
-    <a href="admin_applications.php" class="action-card amber">
-        <div class="action-card-icon amber">📋</div>
+    <div class="dash-card purple">
+        <div class="dash-card-icon">📋</div>
         <h3>Applications</h3>
-        <p>Review pending applications and approve or reject requests.</p>
-        <span class="card-arrow">Review →</span>
-    </a>
+        <p>Review pending applications and approve or reject citizen requests.</p>
+        <ul class="dash-card-list">
+            <li>View all submitted applications</li>
+            <li>Approve or reject requests</li>
+            <li>Track application history</li>
+        </ul>
+        <a href="admin_applications.php" class="dash-card-btn">Review Applications →</a>
+    </div>
 
-    <a href="home.php" class="action-card indigo">
-        <div class="action-card-icon indigo">🏠</div>
-        <h3>User Home</h3>
-        <p>Switch to the citizen view of the platform.</p>
-        <span class="card-arrow">Go to home →</span>
-    </a>
+    <div class="dash-card green">
+        <div class="dash-card-icon">🏠</div>
+        <h3>Citizen View</h3>
+        <p>Switch to the citizen portal to see the user experience.</p>
+        <ul class="dash-card-list">
+            <li>Preview citizen dashboard</li>
+            <li>Test application flow</li>
+            <li>View as a regular user</li>
+        </ul>
+        <a href="home.php" class="dash-card-btn">Go to Home →</a>
+    </div>
 </div>
 
 <?php include 'includes/footer.php'; ?>

@@ -10,19 +10,25 @@ if (!isset($_SESSION['user'])) {
 $services = $conn->query("SELECT * FROM services");
 
 $pageTitle = 'Apply for Service';
+$activePage = 'apply';
 include 'includes/header.php';
 ?>
 
-<a href="home.php" class="back-link">← Back to Home</a>
+<a href="home.php" class="app-back">← Back to Home</a>
 
-<div class="card card-narrow card-glow">
-    <div class="card-header">
-        <h1 class="page-title">📝 Apply for a Service</h1>
-        <p class="page-subtitle">Select a service and tell us why you need assistance.</p>
-    </div>
+<div class="app-page-head">
+    <span class="app-label">New Application</span>
+    <h1>Apply for a Service</h1>
+    <p>Select a service and tell us why you need assistance.</p>
+</div>
+
+<div class="app-card">
+    <h2>Application Form</h2>
+    <span class="app-card-underline"></span>
+    <p class="subtitle">Fill in the details below to submit your request.</p>
 
     <form action="save_application.php" method="POST">
-        <div class="form-group">
+        <div class="app-field">
             <label for="service_id">Select Service</label>
             <select id="service_id" name="service_id" required>
                 <?php while ($s = $services->fetch_assoc()) { ?>
@@ -33,12 +39,12 @@ include 'includes/header.php';
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="app-field">
             <label for="reason">Reason for Application</label>
             <textarea id="reason" name="reason" placeholder="Explain why you are applying for this service..." required></textarea>
         </div>
 
-        <button type="submit" class="btn-block">Submit Application →</button>
+        <button type="submit" class="app-btn app-btn-block">Submit Application →</button>
     </form>
 </div>
 
