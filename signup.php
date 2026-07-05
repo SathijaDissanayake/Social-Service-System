@@ -46,55 +46,50 @@ if (isset($_POST['signup'])) {
         }
     }
 }
+
+$pageTitle = 'Sign Up';
+$bodyClass = 'auth-body';
+include 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header>
-    <h2>Online Social Service Management System</h2>
-</header>
-
-<div class="container auth-page">
-
-    <h3>Create Account</h3>
+<div class="card card-narrow card-glow">
+    <div class="card-header">
+        <h1 class="page-title">Create Account</h1>
+        <p class="page-subtitle">Join today and start applying for social services.</p>
+    </div>
 
     <?php if ($error !== "") { ?>
         <p class="error-msg"><?php echo htmlspecialchars($error); ?></p>
     <?php } ?>
 
     <form method="POST">
+        <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" placeholder="John Doe" required>
+        </div>
 
-        <label>Full Name</label>
-        <input type="text" name="fullname" required>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Choose a unique username" required>
+        </div>
 
-        <label>Username</label>
-        <input type="text" name="username" required>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+        </div>
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter your password" required>
+        </div>
 
-        <label>Confirm Password</label>
-        <input type="password" name="confirm_password" required>
-
-        <br><br>
-
-        <button type="submit" name="signup">Sign Up</button>
-
+        <button type="submit" name="signup" class="btn-block">Create Account →</button>
     </form>
 
     <p class="auth-links">
-        Already have an account? <a href="login.php">Sign In</a>
-        <br>
-        <a href="index.php">Back to Welcome</a>
+        Already have an account? <a href="login.php">Sign In</a><br>
+        <a href="index.php">← Back to Welcome</a>
     </p>
-
 </div>
 
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

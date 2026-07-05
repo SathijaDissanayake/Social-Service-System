@@ -11,18 +11,17 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 
-if(isset($_POST['login']))
-{
-    $username=$_POST['username'];
-    $password=$_POST['password'];
+$error = "";
 
-    $sql="SELECT * FROM users WHERE username='$username' AND password='$password'";
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    $result=mysqli_query($conn,$sql);
+    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    $result = mysqli_query($conn, $sql);
 
-    if(mysqli_num_rows($result)==1)
-    {
-        $row=mysqli_fetch_assoc($result);
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
 
         $_SESSION['id'] = $row['id'];
         $_SESSION['user'] = $row['username'];
@@ -35,91 +34,50 @@ if(isset($_POST['login']))
             header("Location: home.php");
         }
         exit();
-    }
-    else
-    {
-        echo "<script>alert('Invalid Login');</script>";
+    } else {
+        $error = "Invalid username or password.";
     }
 }
+
+$pageTitle = 'Sign In';
+$bodyClass = 'auth-body';
+include 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
+<div class="card card-narrow card-glow">
+    <div class="card-header">
+        <h1 class="page-title">Sign In</h1>
+        <p class="page-subtitle">Welcome back! Enter your credentials to continue.</p>
+    </div>
 
-<head>
+    <?php if ($error !== "") { ?>
+        <p class="error-msg"><?php echo htmlspecialchars($error); ?></p>
+    <?php } ?>
 
-<title>Sign In</title>
+    <form method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        </div>
 
-<link rel="stylesheet" href="style.css">
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
 
-</head>
+        <button type="submit" name="login" class="btn-block">Sign In →</button>
+    </form>
 
-<body>
+    <p class="auth-links">
+        Don't have an account? <a href="signup.php">Create one free</a><br>
+        <a href="index.php">← Back to Welcome</a>
+    </p>
 
-<header>
-
-<h2>Online Social Service Management System</h2>
-
-</header>
-
-<div class="container">
-
-<h3>Sign In</h3>
-
-<form method="POST">
-
-Username
-
-<input type="text" name="username" required>
-
-Password
-
-<input type="password" name="password" required>
-
-<br><br>
-
-<button name="login">Sign In</button>
-
-</form>
-
-<p class="auth-links">
-    Don't have an account? <a href="signup.php">Sign Up</a>
-    <br>
-    <a href="index.php">Back to Welcome</a>
-</p>
-
-<br>
-
-<p>
-
-Admin Login
-
-<br>
-
-Username : admin
-
-<br>
-
-Password : admin123
-
-</p>
-
-<p>
-
-User Login
-
-<br>
-
-Username : uoc
-
-<br>
-
-Password : uoc
-
-</p>
-
+    <div class="info-box">
+        <strong>🔑 Demo Accounts</strong>
+        Admin — <code>admin</code> / <code>admin123</code><br>
+        User — <code>uoc</code> / <code>uoc</code>
+    </div>
 </div>
 
-</body>
-
-</html>
+<?php include 'includes/footer.php'; ?>

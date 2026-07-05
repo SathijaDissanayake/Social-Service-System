@@ -8,42 +8,38 @@ if (!isset($_SESSION['user'])) {
 }
 
 $services = $conn->query("SELECT * FROM services");
+
+$pageTitle = 'Apply for Service';
+include 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Apply Service</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<a href="home.php" class="back-link">← Back to Home</a>
 
-<div class="container">
+<div class="card card-narrow card-glow">
+    <div class="card-header">
+        <h1 class="page-title">📝 Apply for a Service</h1>
+        <p class="page-subtitle">Select a service and tell us why you need assistance.</p>
+    </div>
 
-<h2>Apply for a Service</h2>
+    <form action="save_application.php" method="POST">
+        <div class="form-group">
+            <label for="service_id">Select Service</label>
+            <select id="service_id" name="service_id" required>
+                <?php while ($s = $services->fetch_assoc()) { ?>
+                    <option value="<?php echo $s['id']; ?>">
+                        <?php echo htmlspecialchars($s['service_name']); ?>
+                    </option>
+                <?php } ?>
+            </select>
+        </div>
 
-<form action="save_application.php" method="POST">
+        <div class="form-group">
+            <label for="reason">Reason for Application</label>
+            <textarea id="reason" name="reason" placeholder="Explain why you are applying for this service..." required></textarea>
+        </div>
 
-    <label>Select Service</label>
-    <select name="service_id">
-        <?php while ($s = $services->fetch_assoc()) { ?>
-            <option value="<?php echo $s['id']; ?>">
-                <?php echo htmlspecialchars($s['service_name']); ?>
-            </option>
-        <?php } ?>
-    </select>
-
-    <br><br>
-
-    <input type="text" name="reason" placeholder="Reason for application" required>
-
-    <br><br>
-
-    <button type="submit">Apply</button>
-
-</form>
-
+        <button type="submit" class="btn-block">Submit Application →</button>
+    </form>
 </div>
 
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

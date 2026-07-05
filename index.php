@@ -9,34 +9,43 @@ if (isset($_SESSION['user'])) {
     }
     exit();
 }
+
+$pageTitle = 'Welcome';
+$bodyClass = 'auth-body';
+include 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header>
-    <h2>Online Social Service Management System</h2>
-</header>
-
-<div class="container auth-page">
-
-    <h3>Welcome</h3>
-
-    <p>Apply for social services or manage applications as an admin.</p>
+<div class="card card-narrow card-glow">
+    <div class="hero">
+        <div class="hero-icon">🏛️</div>
+        <h1>Welcome to Social Service Hub</h1>
+        <p>Your gateway to food, medical, and education assistance — apply online in minutes.</p>
+    </div>
 
     <div class="auth-actions">
         <a class="btn btn-primary" href="login.php">Sign In</a>
-        <a class="btn btn-secondary" href="signup.php">Sign Up</a>
+        <a class="btn btn-accent" href="signup.php">Sign Up</a>
     </div>
 
-    <p class="auth-note">Already have an account? Use Sign In. New here? Create an account with Sign Up.</p>
-
+    <p class="auth-note">Already registered? <strong>Sign In</strong> to continue. New user? <strong>Sign Up</strong> to get started.</p>
 </div>
 
-</body>
-</html>
+<div class="feature-row">
+    <div class="feature-pill">
+        <span>📋</span>
+        <strong>Easy Apply</strong>
+        Submit applications online
+    </div>
+    <div class="feature-pill">
+        <span>⚡</span>
+        <strong>Fast Track</strong>
+        Quick status updates
+    </div>
+    <div class="feature-pill">
+        <span>🤝</span>
+        <strong>Trusted</strong>
+        Secure & reliable
+    </div>
+</div>
+
+<?php include 'includes/footer.php'; ?>

@@ -5,41 +5,32 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
     exit();
 }
+
+$pageTitle = 'Add Service';
+include 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Service</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<a href="admin_services.php" class="back-link">← Back to Services</a>
 
-<div class="container">
+<div class="card card-narrow card-glow">
+    <div class="card-header">
+        <h1 class="page-title">➕ Add New Service</h1>
+        <p class="page-subtitle">Create a new service for citizens to apply to.</p>
+    </div>
 
-<h2>Add New Service</h2>
+    <form action="save_service.php" method="POST">
+        <div class="form-group">
+            <label for="name">Service Name</label>
+            <input type="text" id="name" name="name" placeholder="e.g. Food Assistance" required>
+        </div>
 
-<a href="admin_services.php">Back</a>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Describe what this service provides..." required></textarea>
+        </div>
 
-<br><br>
-
-<form action="save_service.php" method="POST">
-
-    <label>Service Name</label>
-    <input type="text" name="name" required>
-
-    <br><br>
-
-    <label>Description</label>
-    <input type="text" name="description" required>
-
-    <br><br>
-
-    <button type="submit">Save Service</button>
-
-</form>
-
+        <button type="submit" class="btn-block">Save Service →</button>
+    </form>
 </div>
 
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>
