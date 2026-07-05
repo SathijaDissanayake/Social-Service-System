@@ -2,6 +2,15 @@
 session_start();
 include("database.php");
 
+if (isset($_SESSION['user'])) {
+    if (($_SESSION['role'] ?? '') === 'admin') {
+        header("Location: admin_dashboard.php");
+    } else {
+        header("Location: home.php");
+    }
+    exit();
+}
+
 if(isset($_POST['login']))
 {
     $username=$_POST['username'];
@@ -39,7 +48,7 @@ if(isset($_POST['login']))
 
 <head>
 
-<title>Login</title>
+<title>Sign In</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -55,7 +64,7 @@ if(isset($_POST['login']))
 
 <div class="container">
 
-<h3>Login</h3>
+<h3>Sign In</h3>
 
 <form method="POST">
 
@@ -69,9 +78,15 @@ Password
 
 <br><br>
 
-<button name="login">Login</button>
+<button name="login">Sign In</button>
 
 </form>
+
+<p class="auth-links">
+    Don't have an account? <a href="signup.php">Sign Up</a>
+    <br>
+    <a href="index.php">Back to Welcome</a>
+</p>
 
 <br>
 
