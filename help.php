@@ -1,14 +1,11 @@
 <?php
-session_start();
+require_once 'includes/auth.php';
 
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
-    exit();
-}
+requireLogin();
 
 $pageTitle = 'Help & Support';
 $activePage = 'help';
-include 'includes/header.php';
+include 'includes/app_start.php';
 ?>
 
 <a href="home.php" class="app-back">← Back to Home</a>
@@ -42,4 +39,4 @@ include 'includes/header.php';
     <p>Need further assistance? Contact your local social services office.</p>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/app_end.php'; ?>

@@ -1,6 +1,3 @@
-
-</main>
-
 <footer class="app-footer">
     <div class="app-footer-inner">
         <div class="app-footer-left">
@@ -31,6 +28,3 @@
         </div>
     </div>
 </footer>
-
-</body>
-</html>

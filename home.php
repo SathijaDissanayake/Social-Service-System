@@ -1,16 +1,14 @@
 <?php
-session_start();
+require_once 'config/database.php';
+require_once 'includes/auth.php';
 
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
-    exit();
-}
+requireLogin();
 
 $pageTitle = 'Home';
 $activePage = 'home';
 $userName = htmlspecialchars($_SESSION['fullname'] ?? $_SESSION['user']);
 
-include 'includes/header.php';
+include 'includes/app_start.php';
 ?>
 
 <section class="home-hero">
@@ -77,7 +75,7 @@ include 'includes/header.php';
         <a href="help.php" class="dash-card-btn">Learn More →</a>
     </div>
 
-    <?php if (($_SESSION['role'] ?? '') === 'admin') { ?>
+    <?php if (isAdmin()) { ?>
     <div class="dash-card orange">
         <div class="dash-card-icon">⚙️</div>
         <h3>Admin Dashboard</h3>
@@ -92,4 +90,4 @@ include 'includes/header.php';
     <?php } ?>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/app_end.php'; ?>

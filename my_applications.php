@@ -1,19 +1,16 @@
 <?php
-session_start();
-include "database.php";
-include "includes/helpers.php";
+require_once 'config/database.php';
+require_once 'includes/auth.php';
+require_once 'includes/helpers.php';
 
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
-    exit();
-}
+requireLogin();
 
 $user_id = $_SESSION['id'];
 $result = $conn->query("SELECT a.*, s.service_name FROM applications a JOIN services s ON a.service_id = s.id WHERE a.user_id = $user_id ORDER BY a.id DESC");
 
 $pageTitle = 'My Applications';
 $activePage = 'applications';
-include 'includes/header.php';
+include 'includes/app_start.php';
 ?>
 
 <a href="home.php" class="app-back">← Back to Home</a>
@@ -58,4 +55,4 @@ include 'includes/header.php';
 </div>
 <?php } ?>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/app_end.php'; ?>

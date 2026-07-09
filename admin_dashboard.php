@@ -1,15 +1,12 @@
 <?php
-session_start();
-include "database.php";
+require_once 'config/database.php';
+require_once 'includes/auth.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit();
-}
+requireAdmin();
 
 $pageTitle = 'Admin Dashboard';
 $activePage = 'dashboard';
-include 'includes/header.php';
+include 'includes/app_start.php';
 ?>
 
 <div class="app-page-head">
@@ -56,4 +53,4 @@ include 'includes/header.php';
     </div>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/app_end.php'; ?>

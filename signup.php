@@ -1,9 +1,9 @@
 <?php
-session_start();
-include("database.php");
+require_once 'config/database.php';
+require_once 'includes/auth.php';
 
-if (isset($_SESSION['user'])) {
-    if (($_SESSION['role'] ?? '') === 'admin') {
+if (isLoggedIn()) {
+    if (isAdmin()) {
         header("Location: admin_dashboard.php");
     } else {
         header("Location: home.php");

@@ -1,17 +1,14 @@
 <?php
-session_start();
-include "database.php";
+require_once 'config/database.php';
+require_once 'includes/auth.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit();
-}
+requireAdmin();
 
 $result = $conn->query("SELECT * FROM services");
 
 $pageTitle = 'Manage Services';
 $activePage = 'services';
-include 'includes/header.php';
+include 'includes/app_start.php';
 ?>
 
 <a href="admin_dashboard.php" class="app-back">← Back to Dashboard</a>
@@ -58,4 +55,4 @@ include 'includes/header.php';
 </div>
 <?php } ?>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/app_end.php'; ?>

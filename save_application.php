@@ -1,11 +1,8 @@
 <?php
-session_start();
-include "database.php";
+require_once 'config/database.php';
+require_once 'includes/auth.php';
 
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
-    exit();
-}
+requireLogin();
 
 $user_id = $_SESSION['id'];
 $service_id = $_POST['service_id'];
@@ -18,4 +15,3 @@ $conn->query($sql);
 
 header("Location: my_applications.php");
 exit();
-?>

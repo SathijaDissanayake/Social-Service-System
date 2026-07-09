@@ -1,14 +1,11 @@
 <?php
-session_start();
+require_once 'includes/auth.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit();
-}
+requireAdmin();
 
 $pageTitle = 'Add Service';
 $activePage = 'services';
-include 'includes/header.php';
+include 'includes/app_start.php';
 ?>
 
 <a href="admin_services.php" class="app-back">← Back to Services</a>
@@ -39,4 +36,4 @@ include 'includes/header.php';
     </form>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/app_end.php'; ?>

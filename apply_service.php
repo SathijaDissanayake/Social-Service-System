@@ -1,17 +1,14 @@
 <?php
-session_start();
-include "database.php";
+require_once 'config/database.php';
+require_once 'includes/auth.php';
 
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
-    exit();
-}
+requireLogin();
 
 $services = $conn->query("SELECT * FROM services");
 
 $pageTitle = 'Apply for Service';
 $activePage = 'apply';
-include 'includes/header.php';
+include 'includes/app_start.php';
 ?>
 
 <a href="home.php" class="app-back">← Back to Home</a>
@@ -48,4 +45,4 @@ include 'includes/header.php';
     </form>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/app_end.php'; ?>

@@ -1,8 +1,8 @@
 <?php
-session_start();
+require_once 'includes/auth.php';
 
-if (isset($_SESSION['user'])) {
-    if (($_SESSION['role'] ?? '') === 'admin') {
+if (isLoggedIn()) {
+    if (isAdmin()) {
         header("Location: admin_dashboard.php");
     } else {
         header("Location: home.php");
@@ -69,7 +69,7 @@ include 'includes/landing_header.php';
         <div class="landing-hero-right">
             <div class="landing-hero-circle"></div>
             <div class="landing-hero-image">
-                <img src="assests/landing.png" alt="Global social service network">
+                <img src="assets/landing.png" alt="Global social service network">
             </div>
         </div>
     </div>

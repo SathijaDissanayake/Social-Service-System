@@ -1,18 +1,15 @@
 <?php
-session_start();
-include "database.php";
-include "includes/helpers.php";
+require_once 'config/database.php';
+require_once 'includes/auth.php';
+require_once 'includes/helpers.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit();
-}
+requireAdmin();
 
 $result = $conn->query("SELECT a.*, u.username, s.service_name FROM applications a JOIN users u ON a.user_id = u.id JOIN services s ON a.service_id = s.id ORDER BY a.id DESC");
 
 $pageTitle = 'Applications';
 $activePage = 'applications';
-include 'includes/header.php';
+include 'includes/app_start.php';
 ?>
 
 <a href="admin_dashboard.php" class="app-back">← Back to Dashboard</a>
@@ -65,4 +62,4 @@ include 'includes/header.php';
 </div>
 <?php } ?>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/app_end.php'; ?>
